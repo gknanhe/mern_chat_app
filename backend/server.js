@@ -1,7 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
-
+import cors from "cors";
 import authRoutes from "./routes/authRoutes.js";
 import messageRoutes from "./routes/messageRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
@@ -9,9 +9,17 @@ import userRoutes from "./routes/userRoutes.js";
 import connectMongoDB from "./db/connectMongoDB.js";
 import bodyParser from "body-parser";
 const app = express();
-const PORT = process.env.PORT || 5000;
-
 dotenv.config();
+// console.log(process.env.PORT);
+const PORT = process.env.PORT || 5000;
+// console.log(PORT);
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST"],
+    credentials: true, //for headers cookies
+  })
+);
 
 app.use(express.json());
 app.use(cookieParser());
