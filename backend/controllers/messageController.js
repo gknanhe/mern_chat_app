@@ -4,6 +4,7 @@ import Message from "../models/message.js";
 export const sendMessage = async (req, res) => {
   try {
     const { message } = req.body;
+    console.log("message body", req.body);
     const { id: recieverId } = req.params;
     const senderId = req.user._id; //from protect routes
 

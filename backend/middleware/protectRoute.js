@@ -4,7 +4,15 @@ import User from "../models/userModel.js";
 const protectRoute = async (req, res, next) => {
   try {
     //extract token
-    const token = req.cookies.jwt;
+    // const token = req.cookies.jwt;
+
+    const authorizationHeader = req.headers.authorization;
+    // console.log("headers", req.headers);
+    const token = authorizationHeader?.startsWith("Bearer ")
+      ? authorizationHeader.substring(7)
+      : null;
+
+    // console.log("token", token);
 
     if (!token) {
       return res

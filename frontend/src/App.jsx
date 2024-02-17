@@ -5,8 +5,19 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import { Toaster } from "react-hot-toast";
 import { useAuthContext } from "./contex/AuthContext";
+import { useTokenStore } from "./store/useConersation";
+import { useEffect } from "react";
 function App() {
   const { authUser } = useAuthContext();
+  const { token, setToken } = useTokenStore();
+
+  useEffect(() => {
+    const retrievedToken = localStorage.getItem("jwt");
+    if (retrievedToken) {
+      setToken(retrievedToken);
+      console.log("token", retrievedToken);
+    }
+  }, []);
 
   return (
     <div className="p-4 h-screen flex items-center justify-center">

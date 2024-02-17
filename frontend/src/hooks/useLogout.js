@@ -21,6 +21,7 @@ export const useLogout = () => {
       toast.success(data.message);
 
       localStorage.removeItem("chat-user");
+      localStorage.removeItem("jwt");
 
       setAuthUser(null);
     } catch (error) {
