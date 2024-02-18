@@ -1,9 +1,12 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useAuthContext } from "../contex/AuthContext.jsx";
+import { useTokenStore } from "../store/useConersation";
+
 const useLogin = () => {
   const [loading, setLoading] = useState(false);
   const { setAuthUser } = useAuthContext();
+  const { setToken } = useTokenStore();
 
   const login = async (username, password) => {
     const success = handleInputErrors(username, password);
@@ -27,6 +30,7 @@ const useLogin = () => {
       localStorage.setItem("chat-user", JSON.stringify(data));
       localStorage.setItem("jwt", data.token);
       setAuthUser(data);
+      setToken(data.token);
     } catch (error) {
       toast.error(error.message);
     } finally {

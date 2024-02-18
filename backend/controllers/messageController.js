@@ -4,7 +4,7 @@ import Message from "../models/message.js";
 export const sendMessage = async (req, res) => {
   try {
     const { message } = req.body;
-    console.log("message body", req.body);
+    // console.log("user ", req.user);
     const { id: recieverId } = req.params;
     const senderId = req.user._id; //from protect routes
 
@@ -45,22 +45,43 @@ export const sendMessage = async (req, res) => {
   }
 };
 
+// export const getMessages = async (req, res) => {
+//   try {
+//     const { id: userToChatId } = req.params;
+//     const senderId = req.user._id;
+
+//     //object of messages
+//     const conversation = await Conversation.findOne({
+//       participants: { $all: [senderId, userToChatId] }, //query criteria. It's specifying that the document being searched for should have an array field named participants where both senderId and userToChatId are present.
+//     }).populate("messages"); //populate messages from conersation
+
+//     //no conversation send 404
+//     if (!conversation) {
+//       res.status(404).json({ message: "Conversation not found" });
+//     }
+//     return res.status(200).json(conversation.messages || []);
+//   } catch (error) {
+//     console.log("error in getMessages controller", error.message);
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// };
+
 export const getMessages = async (req, res) => {
   try {
     const { id: userToChatId } = req.params;
     const senderId = req.user._id;
 
-    //object of messages
     const conversation = await Conversation.findOne({
-      participants: { $all: [senderId, userToChatId] }, //query criteria. It's specifying that the document being searched for should have an array field named participants where both senderId and userToChatId are present.
-    }).populate("messages"); //populate messages from conersation
+      participants: { $all: [senderId, userToChatId] },
+    }).populate("messages"); // NOT REFERENCE BUT ACTUAL MESSAGES
 
-    //no conversation send []
-    if (!conversation) res.status(200).json([]);
+    if (!conversation) return res.status(200).json([]);
 
-    res.status(400).json(conversation.messages);
+    const messages = conversation.messages;
+
+    res.status(200).json(messages);
   } catch (error) {
-    console.log("error in getMessages controller", error.message);
-    res.status(500).json({ error: "Internal Server Error" });
+    console.log("Error in getMessages controller: ", error.message);
+    res.status(500).json({ error: "Internal server error" });
   }
 };

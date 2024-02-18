@@ -2,6 +2,8 @@ import User from "../models/userModel.js";
 
 export const getUsersForSidebar = async (req, res) => {
   try {
+    console.log("logged user ", req.user);
+
     const loggedUserId = req.user._id; // from midddleware
 
     const filteredUsers = await User.find({

@@ -5,11 +5,12 @@ import { useTokenStore } from "../store/useConersation";
 const useGetConversations = () => {
   const [loading, setLoading] = useState(false);
   const [conversations, setConversations] = useState([]);
-  const { token } = useTokenStore();
+  const { token, setToken } = useTokenStore();
 
   useEffect(() => {
     const getConversations = async () => {
       setLoading(true);
+      // setToken(token);
       if (token) {
         // console.log("token in get con", token);
         try {
@@ -35,7 +36,7 @@ const useGetConversations = () => {
     };
 
     getConversations();
-  }, [token]);
+  }, [token, setToken]);
 
   return { loading, conversations };
 };
