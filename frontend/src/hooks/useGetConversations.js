@@ -14,14 +14,17 @@ const useGetConversations = () => {
       if (token) {
         // console.log("token in get con", token);
         try {
-          const res = await fetch("http://localhost:8000/api/users", {
-            method: "GET", // Adjust method as needed
+          const res = await fetch(
+            "https://chat-app-z859.onrender.com/api/users",
+            {
+              method: "GET", // Adjust method as needed
 
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json", // Or appropriate content type
-            },
-          });
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json", // Or appropriate content type
+              },
+            }
+          );
           const data = await res.json();
           if (data.error) {
             throw new Error(data.error);

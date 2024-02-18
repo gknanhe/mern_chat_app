@@ -9,7 +9,7 @@ export default defineConfig({
     //  //for cors error
     proxy: {
       "/api": {
-        target: "http://localhost:8000",
+        target: "https://chat-app-z859.onrender.com",
       },
     },
   },

@@ -13,7 +13,7 @@ const useGetMessages = () => {
 
       try {
         const res = await fetch(
-          `http://localhost:8000/api/messages/${selectedConversation._id}`,
+          `https://chat-app-z859.onrender.com/api/messages/${selectedConversation._id}`,
           {
             method: "GET", // Adjust method as needed
 
